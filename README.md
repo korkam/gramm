@@ -67,6 +67,7 @@ Type <code>doc gramm</code> to find links to the documentation of each method.
 - Multiple ways of separating groups of data: 
   - Colors, lightness, point markers, line styles, and point/line size (<code>'color'</code>, <code>'lightness'</code>, <code>'marker'</code>, <code>'linestyle'</code>,  <code>'size'</code>)
   - Subplots by row and/or columns, or wrapping columns (<code>facet_grid()</code> and <code>facet_wrap()</code>). Multiple options for consistent axis limits across facets, rows, columns, etc. (using <code>'scale'</code> and <code>'space'</code>)
+  - Separate figures (<code>fig()</code>)
 
 - Multiple ways of directly plotting the data: 
   - scatter plots (<code>geom_point()</code>) and jittered scatter plot (<code>geom_jitter()</code>)
@@ -74,7 +75,9 @@ Type <code>doc gramm</code> to find links to the documentation of each method.
   - confidence intervals (<code>geom_interval()</code>)
   - bars plots (<code>geom_bar()</code>)
   - raster plots (<code>geom_raster()</code>)
+  - labels (<code>geom_label()</code>)
   - point counts (<code>point_count()</code>)
+
 
 - Multiple ways of plotting statistics on the data:
   - y data summarized by x values (uniques or binned) with confidence intervals (<code>stat_summary()</code>)
@@ -93,9 +96,10 @@ Type <code>doc gramm</code> to find links to the documentation of each method.
 - Polar coordinates (<code>set_polar()</code>)
 - Color data can also be displayed as a continous variable, not as a grouping factor (<code>set_continuous_color()</code>)
 - Possibility to customize color generations in the LCH color space, chose alternative colormaps (Matlab's default, [colorbrewer2](http://colorbrewer2.org)), or provide a custom colormap (<code>set_color_options()</code>)
-- Possibility to customize marker shapes and sizes with (<code>set_point_options()</code>)
-- Possibility to customize line styles and width with (<code>set_line_options()</code>)
-- Possibility to customize text elements with (<code>set_text_options()</code>)
+- Possibility to customize marker shapes and sizes with <code>set_point_options()</code>
+- Possibility to customize line styles and width with <code>set_line_options()</code>
+- Possibility to customize text elements with <code>set_text_options()</code>
+- Possibility to adjust parameters of <code>stat_</code> functions (alpha level, N bootstraps) with <code>set_stat_options()</code>
 - Possibility to change ordering of grouping variables between native, sorted, or custom (<code>set_order_options</code>)
 - Confidence intervals as shaded areas, error bars or thin lines
 - Set the width and dodging of graphical elements in <code>geom_</code> functions, <code>stat_bin()</code>, <code>stat_summary()</code>, and <code>stat_boxplot()</code>, with <code>'width'</code> and <code>'dodge'</code> arguments
@@ -155,26 +159,30 @@ Using <code>stat_bin()</code> it is possible to construct peristimulus time hist
 
 <img src="/html/examples_10.png" alt="facet_grid() options" width="800">
 
+### Text labels with geom_label() ###
+
+<img src="/html/examples_19.png" alt="geom_label()" width="800">
+
 ### Colormap customization ###
 With <code>set_color_options()</code>
 
-<img src="/html/examples_20.png" alt="Colormaps example" width="800">
+<img src="/html/examples_24.png" alt="Colormaps example" width="800">
 
 ### Continuous colors
 
-<img src="/html/examples_21.png" alt="Continuous colors" width="800">
+<img src="/html/examples_25.png" alt="Continuous colors" width="800">
 
 ###Reordering of categorical variables
 With <code>set_order_options()</code>
 
-<img src="/html/examples_22.png" alt="Reordering" width="800">
+<img src="/html/examples_26.png" alt="Reordering" width="800">
 
 
 ### Superimposition of gramm objects on the same axes
 By making calling the update() method after a first draw, the same axes can be reused for another gramm plot.
-Here this allows to use different groupings for the points and for the glm fit.
+Here this allows to plot the whole dataset in the background of each facet.
 
-<img src="/html/examples_19.png" alt="gramm superimposition" width="600">
+<img src="/html/examples_22.png" alt="gramm superimposition" width="800">
 
 ## Acknowledgements
 gramm was inspired and/or used code from:

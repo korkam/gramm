@@ -11,7 +11,7 @@ p=inputParser;
 my_addParameter(p,'scale',20);
 my_addParameter(p,'point_color','all'); %edge,face,all
 parse(p,varargin{:});
-obj.geom=vertcat(obj.geom,{@(dd)my_count(obj,dd,p.Results)});
+obj.geom=vertcat(obj.geom,{@(dobj,dd)my_count(dobj,dd,p.Results)});
 obj.results.geom_count_handle={};
 end
 
@@ -19,6 +19,7 @@ function hndl=my_count(obj,draw_data,params)
 
 if obj.continuous_color
     disp('geom_count() unsupported with continuous color')
+    hndl=[];
 else
     [x,y]=to_polar(obj,comb(draw_data.x),comb(draw_data.y));
     

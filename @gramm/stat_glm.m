@@ -24,7 +24,7 @@ my_addParameter(p,'fullrange',false);
 my_addParameter(p,'disp_fit',false);
 parse(p,varargin{:});
 
-obj.geom=vertcat(obj.geom,{@(dd)my_glm(obj,dd,p.Results)});
+obj.geom=vertcat(obj.geom,{@(dobj,dd)my_glm(dobj,dd,p.Results)});
 obj.results.stat_glm={};
 end
 
@@ -71,6 +71,7 @@ if sum(~isnan(combx))>2 && sum(~isnan(comby))>2 %numel(combx)>2 &&
     
 else
     warning('Not enough points for linear fit')
+    obj.results.stat_glm{obj.result_ind,1}=[];
 end
 
 end

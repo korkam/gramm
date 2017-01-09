@@ -105,7 +105,7 @@ my_addParameter(p,'interp_in',-1);
 my_addParameter(p,'bin_in',-1);
 parse(p,varargin{:});
 
-obj.geom=vertcat(obj.geom,{@(dd)my_summary(obj,dd,p.Results)});
+obj.geom=vertcat(obj.geom,{@(dobj,dd)my_summary(dobj,dd,p.Results)});
 obj.results.stat_summary={};
 end
 
@@ -277,7 +277,12 @@ if ~strcmp(params.interp,'none')
     end
     
     if strcmp(params.interp,'polar')
-        uni_x=0:pi/50:2*pi-pi/50;
+        %Perform checks on uni_x
+        dx=unique_no_nan(diff([uni_x ; uni_x(1)+2*pi])); %compute step
+        if any(abs(diff(dx))>1e-12) %handle numerical precision problems (exact version would be length(dx)>1 )
+            disp('ERROR: ''polar'' interpolation requires periodic sampling, displayed results are incorrect');
+        end
+        uni_x=uni_x(1):pi/50:uni_x(1)+99*pi/50;
         ymean=interpft(ymean,100);
         tmp_yci1=interpft(yci(1,:),100);
         tmp_yci2=interpft(yci(2,:),100);

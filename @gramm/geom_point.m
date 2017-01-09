@@ -5,10 +5,11 @@ function obj=geom_point(obj,varargin)
 
 p=inputParser;
 my_addParameter(p,'dodge',0);
+my_addParameter(p,'alpha',1);
 parse(p,varargin{:});
 
 
-obj.geom=vertcat(obj.geom,{@(dd)my_point(obj,dd,p.Results)});
+obj.geom=vertcat(obj.geom,{@(dobj,dd)my_point(dobj,dd,p.Results)});
 obj.results.geom_point_handle={};
 end
 
@@ -66,6 +67,8 @@ else
             'MarkerFaceColor',draw_data.color);
     end
 end
+
+set_alpha(hndl,1,params.alpha);
 
 obj.results.geom_point_handle{obj.result_ind,1}=hndl;
 end
