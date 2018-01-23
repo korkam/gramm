@@ -54,17 +54,18 @@ Add the folder containing the @gramm class folder to your path
 
 ### Figure export 
 
-To export figures in a vector-based format, use the SVG option rather than EPS. SVG can be read by all vector editing softwares and causes less problems than EPS both for export and import (transparency support, text without cuts, etc.). In some cases, an even better svg file can be obtained using the [plot2svg](https://www.mathworks.com/matlabcentral/fileexchange/7401) package for export rather than Matlab's built-in feature. The <code>'alpha'</code> option for <code>geom_line()</code> and <code>geom_point()</code> is not supported by Matlab for exports.
+To export figures in a vector-based format, use the SVG or PDF option rather than EPS. SVG can be read by all vector editing softwares and causes less problems than EPS both for export and import (transparency support, text without cuts, etc.). gramm has a convenient <code>export()</code> method that can be called after <code>draw()</code> and maintains correct dimensions/aspect ratio. The <code>'alpha'</code> option for <code>geom_line()</code> and <code>geom_point()</code> is not supported by Matlab for exports.
 
 ### Compatibility ###
 
 
 Tested under Matlab 2014b+ versions. With pre-2014b versions, gramm forces <code>'painters'</code>, renderer to avoid some graphic bugs, which deactivates transparencies (use non-transparent geoms, for example <code>stat_summary('geom','lines')</code>). The statistics toolbox is required for some methods: <code>stat_glm()</code>, some <code>stat_summary()</code> methods, <code>stat_density()</code>. The curve fitting toolbox is required for <code>stat_fit()</code>.
 	
-#### Documentation
-Look at the [gramm cheat sheet](https://github.com/piermorel/gramm/blob/master/gramm%20cheat%20sheet.pdf)
+### Documentation ###
 
-Type <code>doc gramm</code> to find links to the documentation of each method.
+- [gramm cheat sheet](https://github.com/piermorel/gramm/blob/master/gramm%20cheat%20sheet.pdf)
+- Numerous examples in <code>html/examples.html</code> and the corresponding code in examples.m
+-  <code>doc gramm</code> to find links to the documentation of each method.
 
 
 ## Features
@@ -119,6 +120,7 @@ Type <code>doc gramm</code> to find links to the documentation of each method.
 - Matlabs axes properties are acessible through the method <code>axe_property()</code>
 - Custom legend labels with <code>set_names()</code>
 - Plot reference line on the plots with <code>geom_abline()</code>, <code>geom_vline()</code>,<code>geom_hline()</code>
+- Plot reference polygons on the plots with <code>geom_polygon()</code>
 - Date ticks with set_datetick()
 - Gramm works best with table-like data: separate variables / structure fields / table columns for the variables of interest, with each variable having as many elements as observations.
 
@@ -132,20 +134,16 @@ All the mappings presented below can be combined.
 
 <img src="/html/examples_02.png" alt="" width="800">
 
-###Relationship between categorical and continuous variables
+### Relationship between categorical and continuous variables
 
 <img src="/html/examples_03.png" alt="" width="800">
 
-All visualizations can be flipped using <code>coord_flip()</code>
-	
-<img src="/html/examples_04.png" alt="" width="800">
-
-###Distribution of a continuous variable
+### Distribution of a continuous variable
 Note that we by using Origin as a faceting variable, we visualize exactly the same quantities as in the figure above.
 
 <img src="/html/examples_05.png" alt="" width="800">
 
-###Relationship between two continous variables
+### Relationship between two continous variables
 
 <img src="/html/examples_06.png" alt="" width="800">
 
@@ -153,12 +151,12 @@ Note that we by using Origin as a faceting variable, we visualize exactly the sa
 
 <img src="/html/examples_08.png" alt="2D density" width="800">
 
-###Repeated trajectories
+### Repeated trajectories
 Here the variable given as Y is a Nx1 cell of 1D arrays containing the individual trajectories. Color is given as a Nx1 cellstr.
 
 <img src="/html/examples_09.png" alt="" width="800">
 
-###Spike trains
+### Spike trains
 This example highlights the potential use of gramm for neuroscientific data. Here X is a Nx1 cell containing spike trains collected over N trials. Color is given as a Nx1 cellstr.
 Using <code>stat_bin()</code> it is possible to construct peristimulus time histograms.
 
@@ -172,6 +170,10 @@ Using <code>stat_bin()</code> it is possible to construct peristimulus time hist
 
 <img src="/html/examples_11.png" alt="facet_grid() options" width="800">
 
+### Custom layouts ###
+
+<img src="/html/examples_26.png" alt="Custom layouts" width="550">
+
 ### Text labels with geom_label() ###
 
 <img src="/html/examples_21.png" alt="geom_label()" width="800">
@@ -179,16 +181,16 @@ Using <code>stat_bin()</code> it is possible to construct peristimulus time hist
 ### Colormap customization ###
 With <code>set_color_options()</code>
 
-<img src="/html/examples_27.png" alt="Colormaps example" width="800">
+<img src="/html/examples_28.png" alt="Colormaps example" width="800">
 
 ### Continuous colors
 
-<img src="/html/examples_28.png" alt="Continuous colors" width="800">
+<img src="/html/examples_30.png" alt="Continuous colors" width="800">
 
-###Reordering of categorical variables
+### Reordering of categorical variables
 With <code>set_order_options()</code>
 
-<img src="/html/examples_29.png" alt="Reordering" width="800">
+<img src="/html/examples_31.png" alt="Reordering" width="800">
 
 
 ### Superimposition of gramm objects on the same axes

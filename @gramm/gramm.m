@@ -61,6 +61,8 @@ classdef gramm < matlab.mixin.Copyable
         facet_scale='fixed' %Do we have independent scales between facets ?
         facet_space='fixed' %Do scale axes between facets ?
         force_ticks=false %Do we force ticks on all facets
+        row_labels=true;
+        column_labels=true;
         
         %structure containing the abline parameters
         abline=struct('on',0,...
@@ -69,17 +71,27 @@ classdef gramm < matlab.mixin.Copyable
             'xintercept',[],...
             'yintercept',[],...
             'style',[],...
-            'fun',[])
+            'fun',[],...
+            'extent',[])
+        
+        %structure containing polygon parameters - Nicholas Schaub 2017-Mar-07
+        polygon = struct('on',false,...
+                         'x',{[]},...
+                         'y',{[]},...
+                         'color_options',{[]},...
+                         'line_style',{[]},...
+                         'color',[],...
+                         'line_color',[],...
+                         'alpha',[],...
+                         'extent',[]);
         
         datetick_params={} %cell containng datetick parameters
         current_row %What is the currently drawn row of the subplot
         current_column %What is the currently drawn column of the subplot
         
-        continuous_color=false %Do we use continuous colors (rather than discrete)
+        continuous_color_options; %Structure holding continuous color options
         
-        continuous_color_colormap=[];
-        
-        color_options %Structure holding color options
+        color_options  %Structure holding color options
         
         order_options %Structure holding order options
         
@@ -91,7 +103,7 @@ classdef gramm < matlab.mixin.Copyable
         
         stat_options %Structure holding statistics options
         
-        with_legend=true %Do we have a side legend for colors etc. ?
+        layout_options  %Structure holding layout options
         
         legend_y=0 %Current y position of the legend text
         
@@ -108,7 +120,6 @@ classdef gramm < matlab.mixin.Copyable
         
         redraw_cache=[] %Cache store for faster redraw() calls
         redraw_fun={}
-        redraw_spacing=0.04
         
         parent=[]
         
@@ -168,12 +179,14 @@ classdef gramm < matlab.mixin.Copyable
             %Run the set_xx_options() functions without arguments to set
             %defaults
             set_names(obj);
+            set_continuous_color(obj,'active',NaN);
             set_order_options(obj);
             set_color_options(obj);
             set_text_options(obj);
             set_line_options(obj);
             set_point_options(obj);
             set_stat_options(obj);
+            set_layout_options(obj);
         end
         
         obj=update(obj,varargin)
@@ -185,6 +198,7 @@ classdef gramm < matlab.mixin.Copyable
         
         obj=redraw(obj,spacing,display)
         obj=draw(obj,do_redraw)
+		obj=export(obj,varargin)
            
         % Customization methods
         obj=set_polar(obj,varargin)
@@ -208,6 +222,7 @@ classdef gramm < matlab.mixin.Copyable
         obj=geom_count(obj,varargin)
         obj=geom_jitter(obj,varargin)
         obj=geom_abline(obj,varargin)
+        obj=geom_polygon(obj,varargin)
         obj=geom_vline(obj,varargin)
         obj=geom_hline(obj,varargin)
         obj=geom_funline(obj,varargin)
